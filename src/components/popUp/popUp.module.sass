@@ -1,0 +1,108 @@
+@mixin center
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    
+.container
+    background: #6d6d6d
+    height: 30px
+    width: 30px
+    text-align: center
+    border-radius: 250px
+    position: relative
+    color: #E6E6E6
+    font-size: 2em
+    cursor: pointer
+    &_logo
+        width: 85%
+        height: 100%
+        position: absolute
+        right: 50%
+        top: 50%
+        transform: translate(50%, -50%)
+    &_lists
+        background: inherit
+        padding: .5em 0
+        margin: 0
+        margin-top: 1em
+        border-radius: 5px
+        box-shadow: 0 2px 8px rgba(#000, .2)
+        position: absolute
+        top: 100%
+        left: -100%
+        transform: translate(-58%, -10%)
+        color: inherit
+        z-index: 30
+        font-size:14px
+        font-weight: 300
+        text-align: center
+        white-space: nowrap
+        cursor: default
+        &__spinner
+            width: 20%
+            height: 20%
+        li
+            display: flex
+            align-items: center
+            list-style: none
+            padding: .5em 1.5em
+            margin: 0
+            position: relative
+            cursor: pointer
+            &:hover
+                background-color: #ffff
+                color: #000000dd 
+    &_btn
+        display: flex
+        justify-content: space-around
+        align-items: center
+        &__close
+            background: #fff
+            backface-visibility: hidden
+            border-radius: .375rem
+            border-style: solid
+            border-width: 1px
+            box-sizing: border-box
+            color: #212121
+            cursor: pointer
+            display: inline-block
+            font-size: 1rem
+            font-weight: 400
+            margin-top: 1rem
+            margin-bottom: 10px
+            position: relative
+            text-align: left
+            text-decoration: none
+            padding: 12px 14px
+            transform: translateZ(0) scale(1)
+            transition: transform .2s
+            &:hover
+                transform: scale(1.05)
+        &__submit
+            background: #FF4742
+            border: 1px solid #FF4742
+            border-radius: .375rem
+            box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px
+            box-sizing: border-box
+            color: #FFFFFF
+            cursor: pointer
+            display: inline-block
+            font-size: 1rem
+            margin-top: 1rem
+            margin-bottom: 10px
+            font-weight: 700
+            outline: 0
+            padding: 12px 14px
+            text-align: center
+            &:hover
+                background-color: initial
+                background-position: 0 0
+                color: #FF4742
+    &_modalInfo
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        color: #000
+        font-size: 14px
