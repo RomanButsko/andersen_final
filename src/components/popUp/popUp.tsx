@@ -9,9 +9,9 @@ import {
     useDeleteTaskMutation,
 } from '../../store/api/api'
 import { Modal } from '../../ui/modal/Modal'
-import { Button } from '../../ui/button/Button'
-import spinner from './../../assets/menu_spinner.gif'
-import { getFormattedDate, handleCloseModal, handleEdit, handleListClick, handleModal } from './popUp.utils'
+import { handleEdit, handleListClick, handleModal } from './popUp.utils'
+import { ModalBtns } from './ModalBtns'
+import { PopUpItem } from './popUpItem'
 
 export const PopUp: FC<IPopUp> = ({
     id,
@@ -61,28 +61,24 @@ export const PopUp: FC<IPopUp> = ({
                     ref={listRef}
                     onClick={(event) => handleListClick(event)}
                 >
-                    <li onClick={handleCompleted}>
-                        {isCompleted ? 'Вернуть в работу' : 'Выполнено'}
-                        {isLoadingCompleted && (
-                            <img
-                                src={spinner}
-                                className={style.container_lists__spinner}
-                                alt="spinner"
-                            />
-                        )}
+                    <PopUpItem
+                        onClick={handleCompleted}
+                        text={isCompleted ? 'Вернуть в работу' : 'Выполнено'}
+                        isLoading={isLoadingCompleted}
+                    />
+                    <PopUpItem
+                        onClick={handleFavourite}
+                        text={
+                            isFavourite ? 'Убрать из избранного' : 'В избранное'
+                        }
+                        isLoading={isLoadingFavour}
+                    />
+                    <li onClick={() => handleEdit(setIsShow, setEditText)}>
+                        Редактировать
                     </li>
-                    <li onClick={handleFavourite}>
-                        {isFavourite ? 'Убрать из избранного' : 'В избранное'}
-                        {isLoadingFavour && (
-                            <img
-                                src={spinner}
-                                className={style.container_lists__spinner}
-                                alt="spinner"
-                            />
-                        )}
+                    <li onClick={() => handleModal(setIsShow, setShowModal)}>
+                        Удалить
                     </li>
-                    <li onClick={() => handleEdit(setIsShow, setEditText)}>Редактировать</li>
-                    <li onClick={(() => handleModal(setIsShow, setShowModal))}>Удалить</li>
                 </ul>
             )}
             {showModal && (
@@ -92,24 +88,13 @@ export const PopUp: FC<IPopUp> = ({
                     ref={refModal}
                     title={'Удалить'}
                 >
-                    <div className={style.container_modalInfo}>
-                        <span className={style.container_subtitle}>{text}</span>
-                        <span>{getFormattedDate(createdAt)}</span>
-                    </div>
-                    <div className={style.container_btn}>
-                        <Button
-                            className={style.container_btn__close}
-                            onClick={() => handleCloseModal(setIsShow, setShowModal)}
-                        >
-                            Отменить
-                        </Button>
-                        <Button
-                            className={style.container_btn__submit}
-                            onClick={handleRemove}
-                        >
-                            Да, удалить                    
-                        </Button>
-                    </div>
+                    <ModalBtns
+                        text={text}
+                        createdAt={createdAt}
+                        setIsShow={setIsShow}
+                        setShowModal={setShowModal}
+                        handleRemove={handleRemove}
+                    />
                 </Modal>
             )}
         </div>

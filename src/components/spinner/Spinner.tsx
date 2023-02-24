@@ -1,15 +1,19 @@
+import { FC } from 'react'
 import spinner from './../../assets/spinner.gif'
+import { ISpinner } from './spinner.interface'
 import style from './Spinner.module.sass'
 
-export const Spinner = () => {
+export const Spinner: FC<ISpinner> = ({ subtitle, className }) => {
     return (
-        <div className={style.container}>
+        <>
             <img
                 src={spinner}
                 alt="spinner"
-                className={style.container_image}
+                className={`${style.container_image} ${className}`}
             />
-            <h6 className={style.container_subtitle}>Идет загрузка...</h6>
-        </div>
+            {subtitle && (
+                <h6 className={style.container_subtitle}>Идет загрузка...</h6>
+            )}
+        </>
     )
 }
