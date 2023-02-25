@@ -13,10 +13,21 @@ export interface IPopUpItem {
     onClick: () => void
 }
 
-export interface IModal {
+export interface IModalPopUp {
+    id: number
     text: string
     createdAt: Date
+    refModal: any
+    showModal: boolean
     setIsShow(value: boolean): void
     setShowModal(value: boolean): void
-    handleRemove: VoidFunction
+}
+
+export interface IPopUpMenu {
+    id: number
+    isCompleted: boolean
+    isFavourite: boolean
+    setIsShow: (value: boolean) => void
+    setShowModal: (value: boolean) => void
+    setEditText: (value: boolean) => void
 }

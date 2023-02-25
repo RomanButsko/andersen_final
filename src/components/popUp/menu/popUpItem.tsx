@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Spinner } from '../spinner/Spinner'
-import { IPopUpItem } from './popUp.interface'
-import style from './popUp.module.sass'
+import { Spinner } from '../../spinner/Spinner'
+import { IPopUpItem } from '../popUp.interface'
+import style from './../popUp.module.sass'
 
 export const PopUpItem: FC<IPopUpItem> = ({ text, isLoading, onClick }) => {
     return (

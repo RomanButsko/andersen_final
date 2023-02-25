@@ -1,16 +1,19 @@
 import { FC } from 'react'
-import { Button } from '../../ui/button/Button'
-import { IModal } from './popUp.interface'
-import style from './popUp.module.sass'
-import { getFormattedDate, handleCloseModal } from './popUp.utils'
+import { IModalPopUp } from '../popUp.interface'
+import { getFormattedDate, handleCloseModal } from './../popUp.utils'
+import style from './../popUp.module.sass'
+import { Button } from '../../../ui/button/Button'
+import { useDeleteTaskMutation } from '../../../store/api/api'
 
-export const ModalBtns: FC<IModal> = ({
+export const ModalContent: FC<IModalPopUp> = ({
+    id,
     text,
     createdAt,
     setIsShow,
     setShowModal,
-    handleRemove,
 }) => {
+    const [removeTask] = useDeleteTaskMutation()
+    const handleRemove = () => removeTask(id)
     return (
         <>
             <div className={style.container_modalInfo}>

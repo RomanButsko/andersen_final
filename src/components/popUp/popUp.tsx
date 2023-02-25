@@ -1,18 +1,10 @@
-import { FC, useRef } from 'react'
+import { FC } from 'react'
 import { useOutside } from '../../hooks/useOutside'
 import { IPopUp } from './popUp.interface'
 import menu from './../../assets/menu.svg'
 import style from './popUp.module.sass'
-import {
-    useChangeCompletedMutation,
-    useChangeFavouriteMutation,
-    useDeleteTaskMutation,
-} from '../../store/api/api'
-import { Modal } from '../../ui/modal/Modal'
-import { handleEdit, handleListClick, handleModal } from './popUp.utils'
-import { ModalBtns } from './ModalBtns'
-import { PopUpItem } from './popUpItem'
-import { Portal } from '../../portal/Portal'
+import { PopUpModal } from './modal/PopUpModal'
+import { PopUpMenu } from './menu/popUpMenu'
 
 export const PopUp: FC<IPopUp> = ({
     id,
@@ -29,26 +21,6 @@ export const PopUp: FC<IPopUp> = ({
         setIsShow: setShowModal,
     } = useOutside(false)
 
-    const listRef = useRef<HTMLUListElement>(null)
-
-    const [removeTask] = useDeleteTaskMutation()
-    const [changeFavourite, { isLoading: isLoadingFavour }] =
-        useChangeFavouriteMutation()
-    const [changeCompleted, { isLoading: isLoadingCompleted }] =
-        useChangeCompletedMutation()
-
-    const handleRemove = () => removeTask(id)
-
-    const handleFavourite = () => {
-        setIsShow(false)
-        changeFavourite({ id, isFavourite: !isFavourite })
-    }
-
-    const handleCompleted = () => {
-        setIsShow(false)
-        changeCompleted({ id, isCompleted: !isCompleted })
-    }
-
     return (
         <div
             className={style.container}
@@ -57,48 +29,25 @@ export const PopUp: FC<IPopUp> = ({
         >
             <img src={menu} alt="menuLogo" className={style.container_logo} />
             {isShow && (
-                <ul
-                    className={style.container_lists}
-                    ref={listRef}
-                    onClick={(event) => handleListClick(event)}
-                >
-                    <PopUpItem
-                        onClick={handleCompleted}
-                        text={isCompleted ? 'Вернуть в работу' : 'Выполнено'}
-                        isLoading={isLoadingCompleted}
-                    />
-                    <PopUpItem
-                        onClick={handleFavourite}
-                        text={
-                            isFavourite ? 'Убрать из избранного' : 'В избранное'
-                        }
-                        isLoading={isLoadingFavour}
-                    />
-                    <li onClick={() => handleEdit(setIsShow, setEditText)}>
-                        Редактировать
-                    </li>
-                    <li onClick={() => handleModal(setIsShow, setShowModal)}>
-                        Удалить
-                    </li>
-                </ul>
+                <PopUpMenu
+                    id={id}
+                    isCompleted={isCompleted}
+                    isFavourite={isFavourite}
+                    setEditText={setEditText}
+                    setIsShow={setIsShow}
+                    setShowModal={setShowModal}
+                />
             )}
             {showModal && (
-                <Portal>
-                    <Modal
-                        show={showModal}
-                        onClose={setShowModal}
-                        ref={refModal}
-                        title={'Удалить'}
-                    >
-                        <ModalBtns
-                            text={text}
-                            createdAt={createdAt}
-                            setIsShow={setIsShow}
-                            setShowModal={setShowModal}
-                            handleRemove={handleRemove}
-                        />
-                    </Modal>
-                </Portal>
+                <PopUpModal
+                    id={id}
+                    text={text}
+                    createdAt={createdAt}
+                    refModal={refModal}
+                    showModal={showModal}
+                    setIsShow={setIsShow}
+                    setShowModal={setShowModal}
+                />
             )}
         </div>
     )
