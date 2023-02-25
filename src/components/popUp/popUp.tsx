@@ -12,6 +12,7 @@ import { Modal } from '../../ui/modal/Modal'
 import { handleEdit, handleListClick, handleModal } from './popUp.utils'
 import { ModalBtns } from './ModalBtns'
 import { PopUpItem } from './popUpItem'
+import { Portal } from '../../portal/Portal'
 
 export const PopUp: FC<IPopUp> = ({
     id,
@@ -82,20 +83,22 @@ export const PopUp: FC<IPopUp> = ({
                 </ul>
             )}
             {showModal && (
-                <Modal
-                    show={showModal}
-                    onClose={setShowModal}
-                    ref={refModal}
-                    title={'Удалить'}
-                >
-                    <ModalBtns
-                        text={text}
-                        createdAt={createdAt}
-                        setIsShow={setIsShow}
-                        setShowModal={setShowModal}
-                        handleRemove={handleRemove}
-                    />
-                </Modal>
+                <Portal>
+                    <Modal
+                        show={showModal}
+                        onClose={setShowModal}
+                        ref={refModal}
+                        title={'Удалить'}
+                    >
+                        <ModalBtns
+                            text={text}
+                            createdAt={createdAt}
+                            setIsShow={setIsShow}
+                            setShowModal={setShowModal}
+                            handleRemove={handleRemove}
+                        />
+                    </Modal>
+                </Portal>
             )}
         </div>
     )
